@@ -1,57 +1,55 @@
 package utils;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
-import static general.Words.words;
+
+import static utils.Util.addWords;
+import static utils.Util.isCorrectLine;
 
 /**
  * Created by root on 07.02.17.
  */
 public class Parser extends Thread {
 
-    public static List<String> parseLines(String fileLocation) throws IOException {
-        return Files.readAllLines(Paths.get(fileLocation), StandardCharsets.UTF_8);
-    }
 
-
-    public static void addWords(String string) throws IOException {
-        synchronized (words) {
-            StringTokenizer stringTokenizer = new StringTokenizer(string, " \t\n,:-;");
-            while (stringTokenizer.hasMoreTokens()) {
-                String word = stringTokenizer.nextToken();
-                if (words.containsKey(word)) {
-                    words.put(word, words.get(word) + 1);
-                    System.out.println(word + " " + words.get(word));
+    public static List<String> parseLines(String fileLocation) {
+        LinkedList<String> list = new LinkedList<>();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(
+                new FileInputStream(fileLocation), StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (isCorrectLine(line)) {
+                    list.addLast(line);
                 } else {
-                    words.put(word, 1);
-                    System.out.println(word + " " + words.get(word));
+                    throw new IOException("Ошибка в содержимом файла");
                 }
             }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());;
         }
+        return list;
     }
 
 
-    public static void parseWords(String fileLocation) throws IOException {
+    public static void parseWords(String fileLocation) {
         for (String line : parseLines(fileLocation)) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        addWords(line);
-                    } catch (IOException e) {
-                        System.out.println("ошибка в parseWords");
-                    }
+                    addWords(line);
                 }
             }).start();
         }
     }
 
 
-    public static void parseFromResources(List<String> resources) throws IOException{
+    public static void parseFromResources(List<String> resources) {
         for (String resource : resources) {
             parseWords(resource);
         }

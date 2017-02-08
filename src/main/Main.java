@@ -3,12 +3,8 @@ package main;
 
 import utils.Parser;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
-
+import java.io.IOException;
 /**
  * Created by root on 07.02.17.
  */
@@ -20,19 +16,17 @@ public class Main {
         String fileLocation = "/home/sa/MyFolder/test.txt";
         String fileLocation1 = "/home/sa/MyFolder/test1.txt";
         String fileLocation2 = "/home/sa/MyFolder/test2.txt";
+        String fileLocation3 = "/home/sa/MyFolder/test3.txt";
+        String fileLocation4 = "/home/sa/MyFolder/test32.txt";
         List<String> resources = new ArrayList<>();
         resources.add(fileLocation);
         resources.add(fileLocation1);
         resources.add(fileLocation2);
+        resources.add(fileLocation3);
+        resources.add(fileLocation4);
 
+        Parser.parseFromResources(resources);
 
-        //hello, world!
-
-        try {
-            Parser.parseFromResources(resources);
-        } catch (IOException e) {
-            System.out.println("ошибка в main");
-        }
 
 
 
