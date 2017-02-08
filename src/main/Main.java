@@ -2,16 +2,13 @@ package main;
 
 
 import utils.Parser;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.*;
-import java.io.IOException;
 /**
  * Created by root on 07.02.17.
  */
 public class Main {
-
-
-
     public static void main(String[] args) {
         String fileLocation = "/home/sa/MyFolder/test.txt";
         String fileLocation1 = "/home/sa/MyFolder/test1.txt";
@@ -26,12 +23,6 @@ public class Main {
         resources.add(fileLocation4);
 
         Parser.parseFromResources(resources);
-
-
-
-
-
-
     }
 
 }

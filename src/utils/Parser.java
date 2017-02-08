@@ -8,15 +8,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 
-
 import static utils.Util.addWords;
 import static utils.Util.isCorrectLine;
 
 /**
  * Created by root on 07.02.17.
  */
-public class Parser extends Thread {
-
+public class Parser {
 
     public static List<String> parseLines(String fileLocation) {
         LinkedList<String> list = new LinkedList<>();
@@ -36,7 +34,6 @@ public class Parser extends Thread {
         return list;
     }
 
-
     public static void parseWords(String fileLocation) {
         for (String line : parseLines(fileLocation)) {
             new Thread(new Runnable() {
@@ -47,7 +44,6 @@ public class Parser extends Thread {
             }).start();
         }
     }
-
 
     public static void parseFromResources(List<String> resources) {
         for (String resource : resources) {
