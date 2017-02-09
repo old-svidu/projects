@@ -1,55 +1,73 @@
 package utils;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
+import java.io.*;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
-
-import static utils.Util.addWords;
-import static utils.Util.isCorrectLine;
 
 /**
  * Created by root on 07.02.17.
  */
 public class Parser {
 
-    public static List<String> parseLines(String fileLocation) {
+    /**
+     * @param path путь к файлу
+     * @return
+     */
+    public static List<String> parseLinesFromUrl(String path) {
         LinkedList<String> list = new LinkedList<>();
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(
-                new FileInputStream(fileLocation), StandardCharsets.UTF_8))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (isCorrectLine(line)) {
-                    list.addLast(line);
-                } else {
-                    throw new IOException("Ошибка в содержимом файла");
-                }
-            }
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());;
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL(path).openStream()))) {
+            Util.addToList(br, list);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
         return list;
     }
 
-    public static void parseWords(String fileLocation) {
-        for (String line : parseLines(fileLocation)) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    addWords(line);
-                }
-            }).start();
+    /**
+     * @param path путь к файлу
+     * @return
+     */
+    public static List<String> parseLinesFromFile(String path) {
+        LinkedList<String> list = new LinkedList<>();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
+            Util.addToList(br, list);
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
+
+    /**
+     * @param path путь к файлу
+     */
+    public static void parseWords(String path) {
+        if (Util.isUrl(path)) {
+            for (String line : parseLinesFromUrl(path)) {
+                Util.addToHashSet(line);
+            }
+        } else {
+            for (String line : parseLinesFromFile(path)) {
+                Util.addToHashSet(line);
+            }
         }
     }
 
-    public static void parseFromResources(List<String> resources) {
+    /**
+     * @param resources массив ресурсов(ссылок на файлы и путей к локальным файлам)
+     */
+    public static void parseFromResources(String[] resources) {
         for (String resource : resources) {
-            parseWords(resource);
-        }
+            new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        parseWords(resource);
+                    }
+                }).start();
+            }
     }
-
 
 }
