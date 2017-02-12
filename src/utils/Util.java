@@ -1,12 +1,6 @@
 package utils;
 
-import general.Words;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.LinkedList;
 import java.util.Scanner;
-
 import static general.Words.words;
 
 /**
@@ -15,12 +9,22 @@ import static general.Words.words;
 public class Util {
 
     /**
-     * @param string строка, которую разбиваем на слова(после разбиения добавляем слова в HashMap)
+     * @param string строка, которую разбиваем на слова(после разбиения добавляем слова в HashMap words)
+     *
+     * HashMap words содержит пары (слово, количество вхождений в ресурсы).
+     * Метод разбивает строку на слова. Для каждого слова проверяется, является ли оно ключом в HashMap.
+     *
+     * Если слово является ключом, то мы увеличиваем количество вхождений слова  на 1 и выводим
+     * данное словно на консоль с количеством его вхождений в обработанные ресурсы.
+     *
+     * Если слово не является ключом, то это сигнализирует о том, что мы встречаем  его первый раз и нам необходимо
+     * добавить его в HashMap. После добавление в HashMap, выводим слово на консоль с количеством его вхождений
+     * в обработанные ресурсы.
      */
-    public static void addToHashSet(String string) {
+    public static void addToHashMap(String string) {
         synchronized (words) {
             Scanner scanner = new Scanner(string);
-            scanner.useDelimiter("[\\s.,:;0-9\\(\\)\\[\\]]+");
+            scanner.useDelimiter("[\\s\\p{Punct}0-9]+");
             while (scanner.hasNext()) {
                 String word = scanner.next();
                 if (words.containsKey(word)) {
@@ -35,33 +39,19 @@ public class Util {
     }
 
     /**
-     * @param br
-     * @param list список, в который будем считывать строки
-     * @throws IOException
-     */
-    public static void addToList(BufferedReader br, LinkedList<String> list) throws IOException {
-        String line;
-        while ((line = br.readLine()) != null) {
-            if (isCorrectLine(line)) {
-                list.addLast(line);
-            } else {
-                Words.flag = false;
-                throw new IOException("Ошибка в содержимом файла");
-            }
-        }
-    }
-
-    /**
      * @param line
-     * @return
+     * @return true если строка не содержит латинские символы и false  в противном случае
+     * Метод является сигнализатором, допустимый ли файл
      */
     public static boolean isCorrectLine(String line) {
-        return !line.matches(".*[a-zA-Z].*");
+        return !line.matches("^.*[a-zA-Z]+.*$");
     }
 
     /**
      * @param line
-     * @return
+     * @return true если строка начинается с http:// или http:// и false в противном случае
+     * Метод является сигнализатором, является ли строка URL или нет.
      */
-    public static boolean isUrl(String line) { return line.matches("^http"); }
+    public static boolean isUrl(String line) {
+        return line.matches("^(http:\\/)|^(https:\\/).+$"); }
 }
