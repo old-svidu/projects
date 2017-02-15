@@ -1,6 +1,13 @@
 package utils;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Scanner;
+import java.util.regex.Pattern;
+
 import static general.Words.words;
 
 /**
@@ -38,20 +45,23 @@ public class Util {
         }
     }
 
-    /**
-     * @param line
-     * @return true если строка не содержит латинские символы и false  в противном случае
-     * Метод является сигнализатором, допустимый ли файл
-     */
-    public static boolean isCorrectLine(String line) {
-        return !line.matches("^.*[a-zA-Z]+.*$");
-    }
 
     /**
-     * @param line
-     * @return true если строка начинается с http:// или http:// и false в противном случае
-     * Метод является сигнализатором, является ли строка URL или нет.
+     * @param path
+     * @return BufferedReader для посторочного считывания файла
+     * @throws IOException
+     * @throws IllegalArgumentException
+     *
+     * Функция возвращает BufferedReader, если path является Url или путем к существующему файлу.
+     * В противном случае выбрасывается ошибка.
      */
-    public static boolean isUrl(String line) {
-        return line.matches("^(http:\\/)|^(https:\\/).+$"); }
+    public static BufferedReader getBufferedReaderFromPath(String path) throws IOException, IllegalArgumentException {
+        BufferedReader br;
+        if(path.matches("^(http:\\/|https:\\/|ftp:\\/).+$")){
+            br = new BufferedReader(new InputStreamReader(new URL(path).openStream()));
+        } else {
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
+        }
+        return br;
+    }
 }

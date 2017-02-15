@@ -1,0 +1,24 @@
+ERROR   2017-02-14 20:35:16,617 [Thread-1] utils.Parser  - java.io.IOException
+ERROR   2017-02-14 20:35:27,425 [Thread-1] utils.Parser  - java.io.IOException
+ERROR   2017-02-14 20:35:32,325 [Thread-1] utils.Parser  - java.io.IOException
+ERROR   2017-02-14 20:53:47,564 [Thread-1] utils.Parser  - java.io.IOException
+TRACE   2017-02-14 20:53:47,579 [Thread-0] utils.Parser  - Ресурс src/main/resources/test обработан.
+TRACE   2017-02-15 16:01:25,399 [Thread-1] utils.Parser  - Ресурс src/main/resources/test обработан.
+ERROR   2017-02-15 16:01:25,410 [Thread-2] utils.Parser  - java.io.IOException
+TRACE   2017-02-15 16:01:36,797 [Thread-1] utils.Parser  - Ресурс src/main/resources/test обработан.
+ERROR   2017-02-15 16:01:36,801 [Thread-2] utils.Parser  - java.io.IOException
+ERROR   2017-02-15 16:01:49,590 [Thread-2] utils.Parser  - java.io.IOException
+TRACE   2017-02-15 16:01:49,594 [Thread-1] utils.Parser  - Ресурс src/main/resources/test обработан.
+ERROR   2017-02-15 16:02:12,913 [Thread-2] utils.Parser  - java.io.IOException
+TRACE   2017-02-15 16:02:12,918 [Thread-1] utils.Parser  - Ресурс src/main/resources/test обработан.
+ERROR   2017-02-15 16:02:41,858 [Thread-2] utils.Parser  - java.io.IOException
+TRACE   2017-02-15 16:02:41,861 [Thread-1] utils.Parser  - Ресурс src/main/resources/test обработан.
+ERROR   2017-02-15 16:02:57,004 [Thread-2] utils.Parser  - java.io.IOException
+TRACE   2017-02-15 16:02:57,011 [Thread-1] utils.Parser  - Ресурс src/main/resources/test обработан.
+ERROR   2017-02-15 16:04:18,758 [Thread-1] utils.Parser  - java.io.IOException
+TRACE   2017-02-15 16:04:18,759 [Thread-0] utils.Parser  - Ресурс src/main/resources/test обработан.
+ERROR   2017-02-15 16:04:50,285 [Thread-2] utils.Parser  - java.io.IOException
+TRACE   2017-02-15 16:04:50,286 [Thread-1] utils.Parser  - Ресурс src/main/resources/test обработан.
+ERROR   2017-02-15 16:05:44,864 [Thread-2] utils.Parser  - java.io.IOException
+TRACE   2017-02-15 16:05:44,864 [Thread-1] utils.Parser  - Ресурс src/main/resources/test обработан.
+TRACE   2017-02-15 16:52:29,937 [Thread-0] utils.Parser  - Ресурс src/main/resources/test обработан.
